@@ -3,6 +3,10 @@ from flask_cors import CORS
 from requests import post
 import logging as log
 
+log.basicConfig(
+  format=u'%(filename)s [ LINE:%(lineno)+3s ]#%(levelname)+8s [%(asctime)s] %(message)s', 
+  level=logging.INFO
+)
 app = Flask(__name__)
 CORS(app)
 
