@@ -5,7 +5,7 @@ import logging as log
 
 log.basicConfig(
   format=u'%(filename)s [ LINE:%(lineno)+3s ]#%(levelname)+8s [%(asctime)s] %(message)s', 
-  level=logging.INFO
+  level=log.INFO
 )
 app = Flask(__name__)
 CORS(app)
