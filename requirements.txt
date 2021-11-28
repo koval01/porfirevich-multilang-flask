@@ -1,7 +1,4 @@
 Flask
-Flask-RESTful
+flask_cors
 gunicorn
-itsdangerous
-Jinja2
-peewee
-Werkzeug
+requests
