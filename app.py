@@ -18,7 +18,7 @@ def translate(text: str, lang: str) -> str or None:
     })
     log.info("Translate server status code: %d" % resp.status_code)
     
-    if resp.status_code > 200 < 400:
+    if resp.status_code >= 200 < 400:
       json_resp = resp.json()
       text_result = json_resp["body"]["text"]
 
@@ -42,7 +42,7 @@ def generate(text: str, length: int) -> list or None:
     })
     log.info("AI server status code: %d" % resp.status_code)
     
-    if resp.status_code > 200 < 300 and \
+    if resp.status_code >= 200 < 300 and \
       len(resp.text) > 50:
       
       log.info("Generate success! Result text (raw): \"%s\". Init text: \"%s\"" % (
