@@ -28,6 +28,7 @@ def generate(text: str, length: int) -> list or None:
     "Content-Type": "text/plain;charset=UTF-8"
   })
   if resp.status_code > 200 < 300 and len(resp.text) > 50:
+    print(resp)
     return resp.json()["replies"]
     
 
