@@ -20,9 +20,9 @@ def translate(text: str, lang: str) -> str or None:
       json_resp = resp.json()
       text_result = json_resp["body"]["text"]
 
-#       if json_resp["success"]:
-      log.info("Translate success. Result text: \"%s\". Init text: \"%s\"" % (text_result, text))
-      return text_result
+      if json_resp["success"]:
+        log.info("Translate success. Result text: \"%s\". Init text: \"%s\"" % (text_result, text))
+        return text_result
       
   except Exception as e:
     log.warning("Translate function internal error!")
@@ -72,7 +72,7 @@ def generate_request() -> jsonify:
     ))
     
     ru_text = translate(text=data["prompt"], lang="ru")
-    if not ru_text: log.error("Error translate to ru from uk."); return e
+    if not len(ru_text): log.error("Error translate to ru from uk."); return e
     
     ai_resp = generate(length=data["length"], text=ru_text)
     if not ai_resp: log.error("Error AI response."); return e
