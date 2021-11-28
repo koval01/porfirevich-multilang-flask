@@ -22,6 +22,7 @@ def translate(text: str, lang: str) -> str or None:
       json_resp = resp.json()
       text_result = json_resp["body"]["text"]
 
+      log.info("Translate server json status: %s" % json_resp["success"])
       if json_resp["success"]:
         log.info("Translate success. Result text: \"%s\". Init text: \"%s\"" % (text_result, text))
         return text_result
