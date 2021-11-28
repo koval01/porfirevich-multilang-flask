@@ -56,6 +56,8 @@ def index_request() -> jsonify:
 @app.route('/generate', methods=["POST"])
 def generate_request() -> jsonify or None:
   data = request.get_json()
+  log.info("Generate method ordered: \"%s\"" % data)
+  
   if data \
     and len(data["prompt"]) > 0 < 1000 \
     and data["length"] > 0 <= 60:
