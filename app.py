@@ -39,15 +39,16 @@ def index_request():
 @app.route('/generate')
 def generate_request(request):
   data = request.get_json()
-  if data and \
-    len(data["prompt"]) > 0 < 1000 \
+  if data \
+    and len(data["prompt"]) > 0 < 1000 \
     and data["length"] > 0 <= 60:
     
     ru_text = translate(text=data["prompt"], lang="ru")
     ai_resp = generate(length=data["length"], text=ru_text)
     
     uk_text_array = [
-      translate(text=replie, lang="uk") for replie in ai_resp if len(replie) > 10
+      translate(text=replie, lang="uk") 
+      for replie in ai_resp if len(replie) > 10
     ]
     
     return jsonify({
