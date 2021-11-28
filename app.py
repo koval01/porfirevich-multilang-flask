@@ -37,7 +37,7 @@ def index_request():
 
   
 @app.route('/generate', methods=["POST"])
-def generate_request(request):
+def generate_request():
   data = request.get_json()
   if data \
     and len(data["prompt"]) > 0 < 1000 \
