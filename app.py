@@ -16,7 +16,9 @@ def translate(text: str, lang: str) -> str or None:
     resp = post("https://thetranslate.herokuapp.com/answer", json={
       "text": text, "to_lang": lang
     })
-    if resp.status_code > 200 < 300:
+    log.info("Translate server status code: %d" % resp.status_code)
+    
+    if resp.status_code > 200 < 400:
       json_resp = resp.json()
       text_result = json_resp["body"]["text"]
 
@@ -37,6 +39,7 @@ def generate(text: str, length: int) -> list or None:
       "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15" 
                     "(KHTML, like Gecko) Version/15.1 Safari/605.1.15",
     })
+    log.info("AI server status code: %d" % resp.status_code)
     
     if resp.status_code > 200 < 300 and \
       len(resp.text) > 50:
@@ -72,7 +75,7 @@ def generate_request() -> jsonify:
     ))
     
     ru_text = translate(text=data["prompt"], lang="ru")
-    if not len(ru_text): log.error("Error translate to ru from uk."); return e
+    if not ru_text: log.error("Error translate to ru from uk."); return e
     
     ai_resp = generate(length=data["length"], text=ru_text)
     if not ai_resp: log.error("Error AI response."); return e
