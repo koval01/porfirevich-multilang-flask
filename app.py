@@ -1,6 +1,9 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from .http import translate, generate
+
+from . import http
+from http import translate, generate
+
 import logging as log
 
 log.basicConfig(
