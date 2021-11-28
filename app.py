@@ -20,9 +20,9 @@ def translate(text: str, lang: str) -> str or None:
       json_resp = resp.json()
       text_result = json_resp["body"]["text"]
 
-      if json_resp["success"]:
-        log.info("Translate success. Result text: \"%s\". Init text: \"%s\"" % (text_result, text))
-        return text_result
+#       if json_resp["success"]:
+      log.info("Translate success. Result text: \"%s\". Init text: \"%s\"" % (text_result, text))
+      return text_result
       
   except Exception as e:
     log.warning("Translate function internal error!")
