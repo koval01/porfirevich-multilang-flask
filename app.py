@@ -36,7 +36,7 @@ def index_request():
   return jsonify({"body": "Application is running!"})
 
   
-@app.route('/generate')
+@app.route('/generate', methods=["POST"])
 def generate_request(request):
   data = request.get_json()
   if data \
