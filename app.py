@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from requests import post
+import logging as log
 
 app = Flask(__name__)
 CORS(app)
@@ -12,8 +13,11 @@ def translate(text: str, lang: str) -> str or None:
   })
   if resp.status_code > 200 < 300:
     json_resp = resp.json()
+    text_result = json_resp["body"]["text"]
+    
     if json_resp["success"]:
-      return json_resp["body"]["text"]
+      log.info("Translate success. Result text: \"%s\". Init text: \"%s\"" % (text_result, text))
+      return text_result
     
     
 def generate(text: str, length: int) -> list or None:
@@ -25,6 +29,9 @@ def generate(text: str, length: int) -> list or None:
                   "(KHTML, like Gecko) Version/15.1 Safari/605.1.15",
   })
   if resp.status_code > 200 < 300 and len(resp.text) > 50:
+    log.info("Generate success! Result text (raw): \"%s\". Init text: \"%s\"" % (
+      resp.text, text
+    ))
     return resp.json()["replies"]
     
 
@@ -39,6 +46,10 @@ def generate_request():
   if data \
     and len(data["prompt"]) > 0 < 1000 \
     and data["length"] > 0 <= 60:
+    
+    log.info("Generate success. Len: %d. Prompt: \"%s\"" % (
+      data["length"], data["prompt"]
+    ))
     
     ru_text = translate(text=data["prompt"], lang="ru")
     ai_resp = generate(length=data["length"], text=ru_text)
