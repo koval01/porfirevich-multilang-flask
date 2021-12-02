@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 
 from reqproc import translate, generate
+from other_code import available_lang
 
 import logging as log
 
@@ -28,7 +29,8 @@ def generate_request() -> jsonify:
   
   if data \
     and len(data["prompt"]) > 0 < 1000 \
-    and data["length"] > 0 <= 60:
+    and data["length"] > 0 <= 60 \
+    and data["lang"] in available_lang:
     
     log.info("Generate success. Len: %d. Prompt: \"%s\"" % (
       data["length"], data["prompt"]
