@@ -27,8 +27,8 @@ def generate_request() -> jsonify:
   
   if data \
     and (len(data["prompt"]) > 0 < 1000) \
-    and (data["length"] > 0 <= 60) \
-    and (data["lang"] in available_lang):
+    and (int(data["length"]) > 0 <= 60) \
+    and (str(data["lang"]) in available_lang):
     
     log.info("Generate success. Len: %d. Prompt: \"%s\"" % (
       data["length"], data["prompt"]
