@@ -24,18 +24,19 @@ def generate_request() -> jsonify:
   data = request.get_json()
   log.info("Generate method ordered: \"%s\"" % data)
   e = jsonify({"ok": False})  # default error response
+  data["lang"] = data["lang"].lower()  # convert lang code to lowercase
   
   if data \
     and (len(data["prompt"]) >= 20 < 1000) \
     and (int(data["length"]) > 15 <= 60) \
-    and (str(data["lang"]) in available_lang):
+    and (data["lang"] in available_lang):
     
     log.info("Generate success. Len: %d. Prompt: \"%s\"" % (
-      int(data["length"]), str(data["prompt"])
+      int(data["length"]), data["prompt"]
     ))
     
     ru_text = translate(text=data["prompt"], lang="ru")
-    if not ru_text: log.error("Error translate to ru from uk."); return e
+    if not ru_text: log.error("Error translate to ru from %s." % data["lang"]); return e
     
     ai_resp = generate(length=data["length"], text=ru_text)
     if not ai_resp: log.error("Error AI response."); return e
