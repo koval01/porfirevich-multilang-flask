@@ -31,7 +31,7 @@ def generate_request() -> jsonify:
     and (str(data["lang"]) in available_lang):
     
     log.info("Generate success. Len: %d. Prompt: \"%s\"" % (
-      data["length"], data["prompt"]
+      int(data["length"]), str(data["prompt"])
     ))
     
     ru_text = translate(text=data["prompt"], lang="ru")
