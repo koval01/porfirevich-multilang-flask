@@ -16,9 +16,7 @@ CORS(app)
 
 @app.route('/')
 def index_request() -> jsonify:
-  return jsonify({
-    "body": "Application is running!"
-  })
+  return jsonify({"body": "Application is running!"})
 
   
 @app.route('/generate', methods=["POST"])
@@ -42,14 +40,14 @@ def generate_request() -> jsonify:
     ai_resp = generate(length=data["length"], text=ru_text)
     if not ai_resp: log.error("Error AI response."); return e
     
-    uk_text_array = [
-      translate(text=replie, lang="uk") 
+    userLang_text_array = [
+      translate(text=replie, lang=data["lang"]) 
       for replie in ai_resp if len(replie) > 10
     ]
     
     return jsonify({
-      "ok": len(uk_text_array) > 0, 
-      "replies": uk_text_array
+      "ok": len(userLang_text_array) > 0, 
+      "replies": userLang_text_array
     })
   
   return e
