@@ -26,8 +26,8 @@ def generate_request() -> jsonify:
   e = jsonify({"ok": False})  # default error response
   
   if data \
-    and (len(data["prompt"]) > 0 < 1000) \
-    and (int(data["length"]) > 0 <= 60) \
+    and (len(data["prompt"]) >= 20 < 1000) \
+    and (int(data["length"]) > 15 <= 60) \
     and (str(data["lang"]) in available_lang):
     
     log.info("Generate success. Len: %d. Prompt: \"%s\"" % (
@@ -48,6 +48,20 @@ def generate_request() -> jsonify:
     return jsonify({
       "ok": len(userLang_text_array) > 0, 
       "replies": userLang_text_array
+    })
+  
+  else:
+    return jsonify({
+      "ok": False,
+      "body": {
+        "error_msg": "Minimum \"prompt\" length - 20 characters, maximum up to \
+                      1000 characters. The minimum value of \"length\" is 15, and \
+                      the maximum is 60. The \"lang\" parameter must contain the ISO \
+                      code of the language you want to use. The list of supported \
+                      languages is displayed in the JSON error response.",
+        "exception": "Check error!",
+        "available_lang": available_lang
+      }
     })
   
   return e
