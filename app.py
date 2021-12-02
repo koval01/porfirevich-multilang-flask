@@ -26,9 +26,9 @@ def generate_request() -> jsonify:
   e = jsonify({"ok": False})  # default error response
   
   if data \
-    and len(data["prompt"]) > 0 < 1000 \
-    and data["length"] > 0 <= 60 \
-    and data["lang"] in available_lang:
+    and (len(data["prompt"]) > 0 < 1000) \
+    and (data["length"] > 0 <= 60) \
+    and (data["lang"] in available_lang):
     
     log.info("Generate success. Len: %d. Prompt: \"%s\"" % (
       data["length"], data["prompt"]
